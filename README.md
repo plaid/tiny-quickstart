@@ -4,7 +4,7 @@
 
 This is a minimal app that implements Plaid using a very basic HTML/vanilla JS frontend with an Express/Node backend. After linking a sample bank account, the app retrieves balance information associated with the account and renders it on the home page. 
 
-If you're looking for a more fully-featured quickstart, covering more API endpoints, available in more languages, and with explanations of the underlying flows, see [Plaid Quickstart](https://github.com/plaid/quickstart). 
+If you're looking for a more fully-featured quickstart, covering more API endpoints, available in more languages, and with explanations of the underlying flows, see the official [Plaid Quickstart](https://github.com/plaid/quickstart). 
 
 ### Running the app
 
