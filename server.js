@@ -80,7 +80,9 @@ app.get("/api/data", async (req, res, next) => {
 // Checks whether the user's account is connected, called
 // in index.html when redirected from oauth.html
 app.get("/api/is_account_connected", async (req, res, next) => {
-  return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
+  return req.session.access_token
+    ? res.json({ status: true })
+    : res.json({ status: false });
 });
 
 app.listen(process.env.PORT || 8080);
