@@ -14,7 +14,7 @@
           token: linkToken,
           receivedRedirectUri: window.location.href,
           onSuccess: async (publicToken, metadata) => {
-            await fetch("/api/exchange-public-token", {
+            await fetch("/api/exchange_public_token", {
               method: "POST",
               body: JSON.stringify({ public_token: publicToken }),
               headers: {
