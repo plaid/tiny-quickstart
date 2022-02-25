@@ -44,7 +44,7 @@ const config = new Configuration({
 const client = new PlaidApi(config);
 
 //Creates a Link token and return it
-app.get("/api/create-link-token", async (req, res, next) => {
+app.get("/api/create_link_token", async (req, res, next) => {
   const tokenResponse = await client.linkTokenCreate({
     user: { client_user_id: req.sessionID },
     client_name: "Plaid's Tiny Quickstart",
@@ -57,7 +57,7 @@ app.get("/api/create-link-token", async (req, res, next) => {
 });
 
 // Exchanges the public token from Plaid Link for an access token
-app.post("/api/exchange-public-token", async (req, res, next) => {
+app.post("/api/exchange_public_token", async (req, res, next) => {
   const exchangeResponse = await client.itemPublicTokenExchange({
     public_token: req.body.public_token,
   });
