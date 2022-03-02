@@ -2,7 +2,7 @@
   "name": "plaid-tiny-quickstart",
   "version": "1.0.0",
   "description": "A minimal quickstart demonstrating Plaid Link, Balances, and OAuth",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,9 +14,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
-    "moment": "^2.29.1",
     "path": "^0.12.7",
-    "plaid": "^9.10.0",
-    "session": "^0.1.0"
+    "plaid": "^9.10.0"
   }
 }
