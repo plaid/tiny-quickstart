@@ -6,7 +6,6 @@ This is a minimal app that implements Plaid using a React frontend with an Expre
 
 If you're looking for a more fully-featured quickstart, covering more API endpoints, available in more languages, and with explanations of the underlying flows, see the official [Plaid Quickstart](https://www.plaid.com/docs/quickstart). 
 
-
 #### Set up your environment
 
 This app uses the latest stable version of Node. At the time of writing, the latest stable version is v16.14.0. It's recommended you use this version of Node to run the app. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
@@ -30,7 +29,6 @@ cp .env.example .env
 Fill out the contents of the **.env** file with the [client ID and Sandbox secret in your Plaid dashboard](https://dashboard.plaid.com/team/keys). Don't place quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
 
 #### Start the server
-
 
 ```bash
 yarn start
@@ -77,11 +75,7 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:3000/oauth
 
 8. On the next screen, select the first instance of "Platypus OAuth Bank". 
 
-9. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". Click "Sign in" to proceed.
-
-10. Continue through the subsequent screens.
-
-11. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the home page.
+9. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". Click "Sign in" to proceed. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the home page.
 
 For more information on OAuth with Plaid, see the [OAuth Guide](https://plaid.com/docs/link/oauth/) in Plaid's documentation.
 
@@ -94,11 +88,3 @@ If you encounter a **MISSING_FIELDS** error, it's possible you did not properly 
 #### OAuth flow fails to start
 
 Ensure you've added the redirect URI present in the **.env** file as a [configured URI in your Plaid account](https://dashboard.plaid.com/team/api). The two values should be identical.
-
-
-## The code
-
-
-## Notes:
-
-There is no error handling code anywhere, and some important TODOs
