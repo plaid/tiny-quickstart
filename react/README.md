@@ -20,7 +20,7 @@ yarn install
 
 #### Equip the app with credentials
 
-Run the following command to copy the included **.env.example** to a file called **.env**.
+Copy the included **.env.example** to a file called **.env**.
 
 ```bash
 cp .env.example .env
