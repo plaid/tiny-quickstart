@@ -32,13 +32,11 @@ Fill out the contents of the **.env** file with the [client ID and Sandbox secre
 
 #### Start the server
 
-Start the app by running the following command:
-
 ```bash
 npm start
 ```
 
-The app will run on port 8080. To use the app, navigate to `localhost:8080` in your browser. 
+The app will run on port 8080.
 
 ### Using the app
 
@@ -51,7 +49,7 @@ Most banks returned by Link in the app are non-OAuth banks. When connecting a no
 - Username: `user_good`
 - Password: `pass_good`
 
-If you select a bank that requires multi-factor authentication, enter the following code to proceed: `1234`
+If prompted to provide a multi-factor authentication code, use `1234`
 
 #### OAuth banks
 
@@ -79,11 +77,7 @@ PLAID_SANDBOX_REDIRECT_URI=http://localhost:8080/oauth
 
 8. On the next screen, select the first instance of "Platypus OAuth Bank". 
 
-9. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". **Important**: Credentials are not necessary for this bank. Simply click "Sign in" to proceed.
-
-10. Continue through the subsequent screens.
-
-11. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the home page.
+9. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". Click "Sign in" to proceed. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the home page.
 
 For more information on OAuth with Plaid, see the [OAuth Guide](https://plaid.com/docs/link/oauth/) in Plaid's documentation.
 
