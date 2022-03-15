@@ -49,7 +49,7 @@ app.get("/api/create_link_token", async (req, res, next) => {
     user: { client_user_id: req.sessionID },
     client_name: "Plaid's Tiny Quickstart",
     language: "en",
-    products: ["auth"],
+    products: ['auth', 'transactions'],
     country_codes: ["US"],
     redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
   });
