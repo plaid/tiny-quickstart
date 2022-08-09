@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.spinner {
+  margin: 24px auto;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  border: 6px solid gray;
+  border-top: 6px solid gray;
+  animation: rotating 1.2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+button {
+  border: 1px solid black;
+  border-radius: 5px;
+  background: black;
+  height: 48px;
+  width: 155px;
+  margin-top: 20;
+  margin-left: 20;
+  color: white;
+  font-size: 18px;
+}
+
+@keyframes rotating {
+  100% {
+    transform: rotate(360deg);
+  }
+}
