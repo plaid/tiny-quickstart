@@ -2,7 +2,7 @@
 
 ### Overview
 
-Welcome to Plaid's Tiny Quickstart! This repo contains three folders: **vanilla_js/**, **next_js/**  and **react/**. Each folder contains a minimal full-stack app that implements support end-to-end for one Plaid product endpoint. 
+Welcome to Plaid's Tiny Quickstart! This repo contains three folders: **vanilla_js/**, **nextjs/**  and **react/**. Each folder contains a minimal full-stack app that implements support end-to-end for one Plaid product endpoint. 
 
 To get started, clone the repository, `cd` into one of the folders, and follow the instructions in the corresponding **README**. Enjoy! 
 
