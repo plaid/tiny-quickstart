@@ -12,6 +12,8 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 Install [Node.js v16+](https://nodejs.dev/learn/how-to-install-nodejs).
 
+[Install `pnpm`](https://pnpm.io/installation) to follow along with these instructions as written.
+
 #### Install dependencies
 
 Ensure you're in the **nextjs/** folder, then install the necessary dependencies:
