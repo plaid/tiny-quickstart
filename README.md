@@ -2,7 +2,7 @@
 
 ### Overview
 
-Welcome to Plaid's Tiny Quickstart! This repo contains two folders: **vanilla_js/** and **react/**. Each folder contains a minimal app that implements Plaid. The app in the **vanilla_js/** folder uses a vanilla JS front end and a Node/Express backend, while the app in the **react/** folder uses a React front end an a Node/Express backend. Both apps implement Plaid Link, the Balance product, and OAuth.
+Welcome to Plaid's Tiny Quickstart! This repo contains three folders: **vanilla_js/**, **next_js/**  and **react/**. Each folder contains a minimal full-stack app that implements support end-to-end for one Plaid product endpoint. 
 
 To get started, clone the repository, `cd` into one of the folders, and follow the instructions in the corresponding **README**. Enjoy! 
 
