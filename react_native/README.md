@@ -12,7 +12,7 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 You'll need to set up a mobile development environment to run the app on iOS or Android. 
 
-Follow the environment setup instructions found in the official React Native docs: https://reactnative.dev/docs/environment-setup. You'll specifically need to follow the instructions under "React Native CLI Quickstart", and follow the installation instructions for **both** iOS and Android (under "Target OS"). 
+Follow the environment setup instructions found in the official React Native docs: https://reactnative.dev/docs/environment-setup. You'll specifically need to follow the instructions under "React Native CLI Quickstart". Select your "Development OS" and follow the installation instructions for **both** iOS and Android (under "Target OS").
 
 #### Install dependencies
 
@@ -32,7 +32,7 @@ Fill out **.env** with the [client ID and Sandbox secrets found in your Plaid da
 
 #### Start the backend server
 
-In a terminal window, run `node server` in the **TinyQuickstartReactNative/** folder. This will run a local server on port 8080.
+In a terminal window, run `node server.js` in the **TinyQuickstartReactNative/** folder. This will run a local server on port 8080.
 
 #### Run the app (iOS)
 
@@ -42,7 +42,7 @@ In a terminal window, run `node server` in the **TinyQuickstartReactNative/** fo
 
 `npx react-native run-ios`
 
-This command will start Metro, build the app for iOS, and open an iPhone simulator. If you encounter an error related to a simulator not being found, you can specify a simulator like so:
+This command will start Metro, build the app for iOS, open an iPhone simulator, and launch the app in the simulator. If you encounter an error related to a simulator not being found, you can specify a simulator like so:
 
 `npx react-native run-ios --simulator="iPhone 14"`
 
@@ -50,13 +50,13 @@ Alternatively, you can run `npx react-native start` in one terminal window (to s
 
 #### Run the app (Android)
 
-1. Before running the app on Android, ensure that the `fetch()` in the **HomeScreen.tsx** and **SuccessScreen.tsx** files use `http://10.0.2.2:8080` (i.e., `http://10.0.2.2:8080/api/exchange_public_token`). This will ensure that the Android emulator can reach your backend server, where the calls to the Plaid API are made.
+1. Before running the app on Android, ensure that the `fetch()` calls in the **HomeScreen.tsx** and **SuccessScreen.tsx** files use `http://10.0.2.2:8080` (i.e., `http://10.0.2.2:8080/api/exchange_public_token`). This will ensure that the Android emulator can reach your backend server, where the calls to the Plaid API are made.
 
 2. In a terminal window, run the following in the **TinyQuickstartReactNative/** folder:
 
 `npx react-native run-android`
 
-This command will start Metro, build the app for Android, and open an Android emulator. Alternatively, you can run `npx react-native start` in one terminal window (to start Metro), and run `npm run android` in a separate window, in case you'd like to decouple these processes.
+This command will start Metro, build the app for Android, open an Android emulator, and launch the app in the emulator. Alternatively, you can run `npx react-native start` in one terminal window (to start Metro), and run `npm run android` in a separate window, in case you'd like to decouple these processes.
 
 ### Using the app
 
@@ -85,6 +85,8 @@ First, set up OAuth configurations for the project in Xcode:
 4. Click "Signing & Capabilities".
 5. Under "Signing", set "Team" to "None", and set "Bundle Identifier" to `com.plaid.linkauth.ios.reactnative`.
 6. Under "Associated Domains", add `applinks:cdn-testing.plaid.com` as an entry. If "Associated Domains" isn't present, you'll need to add it as a capability by clicking "+ Capability" (located near the "Signing & Capabilities" tab).
+
+![Xcode configuration](./xcode-config.png)
 
 Next, set and invoke your redirect URI.
 
