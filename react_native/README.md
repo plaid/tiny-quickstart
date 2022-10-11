@@ -60,7 +60,7 @@ This command will start Metro, build the app for Android, open an Android emulat
 
 ### Using the app
 
-The app supports both non-OAuth and OAuth flows. The default flow in the app is a non-OAuth flow. The OAuth flow in the app is triggered (for applicable institutions) if a Link token is created with a redirect URI (or an Android package name, when on Android). To specify a redirect URI (or Android package name), modify the request payload to the `/link_token_create/` endpoint in the **server.js** file. For more information, refer to the relevant Plaid documentation: [link/token/create Endpoint](https://plaid.com/docs/api/tokens/#linktokencreate) and [Configure your Link token with your redirect URI](https://plaid.com/docs/link/oauth/#configure-your-link-token-with-your-redirect-uri).
+The app supports both non-OAuth and OAuth flows. The default flow in the app is a non-OAuth flow. The OAuth flow in the app is triggered (for applicable institutions) if a Link token is created with a redirect URI (or an Android package name, when on Android). To specify a redirect URI (or Android package name), refer to the instructions in [OAuth flow](#oauth-flow). For more information, refer to the relevant Plaid documentation: [link/token/create Endpoint](https://plaid.com/docs/api/tokens/#linktokencreate) and [Configure your Link token with your redirect URI](https://plaid.com/docs/link/oauth/#configure-your-link-token-with-your-redirect-uri).
 
 #### Non-OAuth flow
 
