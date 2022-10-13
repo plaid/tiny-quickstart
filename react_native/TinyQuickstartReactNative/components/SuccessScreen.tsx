@@ -10,10 +10,16 @@ var styles = require('./style');
 
 const SuccessScreen = ({ navigation, route }: any) => {
   const [data, setData] = useState(null);
+  const address = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
   // Fetch balance data
   const getBalance = useCallback(async () => {
-    await fetch("http://localhost:8080/api/balance")
+    await fetch(`http://${address}:8080/api/balance`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
     .then((response) => response.json())
     .then((data) => {
       setData(data);

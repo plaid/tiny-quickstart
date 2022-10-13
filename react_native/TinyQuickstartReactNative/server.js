@@ -7,7 +7,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const {Configuration, PlaidApi, PlaidEnvironments} = require('plaid');
+
 const app = express();
+const port = 8080;
 
 app.use(
   // FOR DEMO PURPOSES ONLY
@@ -34,16 +36,30 @@ const config = new Configuration({
 const client = new PlaidApi(config);
 
 //Creates a Link token and return it
-app.get('/api/create_link_token', async (req, res, next) => {
-  const tokenResponse = await client.linkTokenCreate({
-    user: {client_user_id: req.sessionID},
-    client_name: "Plaid's Tiny Quickstart - React Native",
-    language: 'en',
-    products: ['auth'],
-    country_codes: ['US'],
-    // redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
-    // android_package_name: process.env.PLAID_ANDROID_PACKAGE_NAME,
-  });
+app.post('/api/create_link_token', async (req, res, next) => {
+  let payload = {};
+  //Payload if running iOS
+  if (req.body.address === 'localhost') {
+    payload = {
+      user: {client_user_id: req.sessionID},
+      client_name: 'Plaid Tiny Quickstart - React Native',
+      language: 'en',
+      products: ['auth'],
+      country_codes: ['US'],
+      redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
+    };
+  } else {
+    //Payload if running Android
+    payload = {
+      user: {client_user_id: req.sessionID},
+      client_name: 'Plaid Tiny Quickstart - React Native',
+      language: 'en',
+      products: ['auth'],
+      country_codes: ['US'],
+      android_package_name: process.env.PLAID_ANDROID_PACKAGE_NAME,
+    };
+  }
+  const tokenResponse = await client.linkTokenCreate(payload);
   res.json(tokenResponse.data);
 });
 
@@ -60,7 +76,7 @@ app.post('/api/exchange_public_token', async (req, res, next) => {
 });
 
 // Fetches balance data using the Node client library for Plaid
-app.get('/api/balance', async (req, res, next) => {
+app.post('/api/balance', async (req, res, next) => {
   const access_token = req.session.access_token;
   const balanceResponse = await client.accountsBalanceGet({access_token});
   res.json({
@@ -68,4 +84,6 @@ app.get('/api/balance', async (req, res, next) => {
   });
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(port, () => {
+  console.log(`Backend server is running on port ${port}...`);
+});
