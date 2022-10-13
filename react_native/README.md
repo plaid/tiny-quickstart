@@ -16,9 +16,9 @@ Follow the environment setup instructions found in the official React Native doc
 
 #### Install dependencies
 
-Run `npm install` in the **TinyQuickstartReactNative/** folder.
+Ensure your Node version is >= 16.14.0. Next, run `npm install` in the **TinyQuickstartReactNative/** folder.
 
-Next, navigate to the **ios/** folder and run `pod install` to install all necessary iOS dependencies.
+Navigate to the **ios/** folder and run `pod install` to install all necessary iOS dependencies.
 
 #### Equip the app with API credentials
 
