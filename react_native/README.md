@@ -30,41 +30,11 @@ cp .env.example .env
 
 Fill out **.env** with the [client ID and Sandbox secrets found in your Plaid dashboard](https://dashboard.plaid.com/team/keys). Do not use quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`, not `PLAID_CLIENT_ID="adn08a280hqdaj0ad"`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
 
-#### Start the backend server
+#### Configure OAuth
 
-In a terminal window, run `node server.js` in the **TinyQuickstartReactNative/** folder. This will run a local server on port 8080.
+**iOS**
 
-#### Run the app (iOS)
-
-1. Open a new terminal window. In the **TinyQuickstartReactNative/** folder, run:
-
-`npx react-native run-ios`
-
-This command will start Metro, build the app for iOS, open an iPhone simulator, and launch the app in the simulator. If you encounter an error related to a simulator not being found, you can specify a simulator like so:
-
-`npx react-native run-ios --simulator="iPhone 14"`
-
-Alternatively, you can run `npx react-native start` in one terminal window (to start Metro), and run `npm run ios` in a separate terminal window, in case you'd like to decouple these processes.
-
-#### Run the app (Android)
-
-1. In a terminal window, run the following in the **TinyQuickstartReactNative/** folder:
-
-`npx react-native run-android`
-
-This command will start Metro, build the app for Android, open an Android emulator, and launch the app in the emulator. Alternatively, you can run `npx react-native start` in one terminal window (to start Metro), and run `npm run android` in a separate window, in case you'd like to decouple these processes.
-
-### Using the app
-
-The app supports both non-OAuth and OAuth flows. The default flow in the app is an OAuth flow, as OAuth support is required in all Plaid integrations. Link tokens are created with a redirect URI or Android package name, depending on the OS being run. For a non-OAuth flow, modify the `payload` object accordingly in **server.js**. For more information, refer to the relevant Plaid documentation: [link/token/create Endpoint](https://plaid.com/docs/api/tokens/#linktokencreate) and [Configure your Link token with your redirect URI](https://plaid.com/docs/link/oauth/#configure-your-link-token-with-your-redirect-uri).
-
-#### OAuth flow
-
-In the OAuth flow, end users temporarily leave Link to log in and permission data using a bank's website (or mobile app) instead. Afterward, they're redirected back to Link to complete the Link flow and return control to the application where the account is being linked.
-
-**OAuth on iOS**
-
-First, ensure the project has the following configurations set in Xcode:
+Ensure the project has the following configurations set in Xcode:
 
 1. Open **TinyQuickstartReactNative** in Xcode. 
 2. In the navigator on the left, click on "TinyQuickstartReactNative".
@@ -75,49 +45,58 @@ First, ensure the project has the following configurations set in Xcode:
 
 ![Xcode configuration](./xcode-config.png)
 
-Next, set and invoke your redirect URI.
+Configure your redirect URI in the Plaid Dashboard.
 
 1. In the ["API" section of the Plaid Dashboard](https://dashboard.plaid.com/team/api), add the following as a redirect URI: `https://cdn-testing.plaid.com/link/v2/stable/sandbox-oauth-a2a-react-native-redirect.html`.
-2. If you had Metro and/or your local server running (on port 8080), end these processes and restart the app as described in [Run the app (iOS)](#run-the-app-ios).
 
-Run through the OAuth flow:
+**Android**
 
-1. With the app running, open Link.
-2. When prompted to select a bank, type "oauth" into the search bar. Select "Platypus OAuth Bank".
-3. On the next screen, select the first instance of "Platypus OAuth Bank". 
-4. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". Click "Sign in" to proceed. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the app.
-
-**OAuth on Android**
-
-First, configure and invoke the Android package name.
+Configure your Android package name in the Plaid Dashboard.
 
 1. In the ["API" section of the Plaid Dashboard](https://dashboard.plaid.com/team/api), add the following as an allowed Android package name: `com.tinyquickstartreactnative`.
-2. If you had Metro and/or your local server running (on port 8080), end these processes and restart the app as described in [Run the app (Android)](#run-the-app-android).
-
-Run through the OAuth flow:
-
-1. With the app running, open Link.
-2. When prompted to select a bank, type "oauth" into the search bar. Select "Platypus OAuth Bank".
-3. On the next screen, select the first instance of "Platypus OAuth Bank".
-4. Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". Click "Sign in" to proceed. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the app.
 
 For more information on OAuth with Plaid, see the [OAuth Guide](https://plaid.com/docs/link/oauth/) in Plaid's documentation.
 
-#### Non-OAuth flow
+#### Start the backend server
 
-In the non-OAuth flow, use the following credentials to link a sample bank account:
+In a terminal window, run `node server.js` in the **TinyQuickstartReactNative/** folder. This will run a local server on port 8080.
 
-- Username: `user_good`
-- Password: `pass_good`
+#### Run the app
 
-If prompted to provide a multi-factor authentication code, use `1234`.
+Open a new terminal window and run one of the following commands in the **TinyQuickstartReactNative/** folder:
+
+```bash
+# To run on iOS, run this command:
+npx react-native run-ios
+```
+
+```bash
+# To run on Android, run this command:
+npx react-native run-android
+```
+
+Both commands start Metro, build the app, open a simulator/emulator, and launch the app in the simulator/emulator. For iOS, if you encounter an error related to a simulator not being found, you can specify a simulator like so:
+
+`npx react-native run-ios --simulator="iPhone 14"`
+
+Alternatively, you can run `npx react-native start` in one terminal window (to start Metro), and run `npm run ios` in a separate terminal window, in case you'd like to decouple these processes.
+
+To observe OAuth in action, type "oauth" into the search bar when prompted to select a bank. Select "Platypus OAuth Bank". On the next screen, select the first instance of "Platypus OAuth Bank". Click "Continue" when prompted. You'll be redirected to the login page for "First Platypus Bank". Click "Sign in" to proceed. Link will connect the account at the OAuth bank, prompt you to continue, and then redirect you back to the app.
 
 ### Troubleshooting
 
 #### MISSING_FIELDS error
 
-If you encounter a **MISSING_FIELDS** error, it's possible you did not properly fill out the **.env** file. Be sure to add your client ID and Sandbox secret to the corresponding variables in the file.
+* If you encounter a **MISSING_FIELDS** error, it's possible you did not properly fill out the **.env** file. Be sure to add your client ID and Sandbox secret to the corresponding variables in the file.
 
-#### OAuth flow fails to start
+#### Changes you've made aren't reflected in the iOS Simulator or Android emulator
 
-1. Ensure that you've properly configured the redirect URI (or Android package name) in [in your Plaid account](https://dashboard.plaid.com/team/api).
+* Inside of the Metro terminal window, reload Metro by typing the 'R' character.
+
+* Restart the backend server.
+
+* Erase all content and settings from the iOS simulator. With the iOS simulator highlighted, click on "Device" in the toolbar. Next, click "Erase All Content and Settings" from the drop-down menu. Restart the simulator and rebuild the app using `npx react-native run-ios`.
+
+* Wipe all data from the Android emulator. First, quit the Android emulator. Next, open Android studio. In the "Device Manager", wipe data from the corresponding device/emulator by expanding the menu under "Actions" and clicking "Wipe Data". Restart the emulator and rebuild the app using `npx react-native run-android`.
+
+![Android Studio wipe data](./android-studio-wipe-data.png)
