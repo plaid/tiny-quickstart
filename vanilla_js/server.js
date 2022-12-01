@@ -20,11 +20,11 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/", async (req, res) => {
+app.get("/", async (_, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/oauth", async (req, res) => {
+app.get("/oauth", async (_, res) => {
   res.sendFile(path.join(__dirname, "oauth.html"));
 });
 
@@ -44,20 +44,21 @@ const config = new Configuration({
 const client = new PlaidApi(config);
 
 //Creates a Link token and return it
-app.get("/api/create_link_token", async (req, res, next) => {
+// change the language
+// change the country code
+app.get("/api/create_link_token", async (req, res) => {
   const tokenResponse = await client.linkTokenCreate({
     user: { client_user_id: req.sessionID },
-    client_name: "Plaid's Tiny Quickstart",
+    client_name: "My Quickstart",
     language: "en",
     products: ["auth"],
     country_codes: ["US"],
-    redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
   });
   res.json(tokenResponse.data);
 });
 
 // Exchanges the public token from Plaid Link for an access token
-app.post("/api/exchange_public_token", async (req, res, next) => {
+app.post("/api/exchange_public_token", async (req, res) => {
   const exchangeResponse = await client.itemPublicTokenExchange({
     public_token: req.body.public_token,
   });
@@ -69,7 +70,8 @@ app.post("/api/exchange_public_token", async (req, res, next) => {
 });
 
 // Fetches balance data using the Node client library for Plaid
-app.get("/api/data", async (req, res, next) => {
+// Should be named better, probably api/balance
+app.get("/api/data", async (req, res) => {
   const access_token = req.session.access_token;
   const balanceResponse = await client.accountsBalanceGet({ access_token });
   res.json({
@@ -79,7 +81,7 @@ app.get("/api/data", async (req, res, next) => {
 
 // Checks whether the user's account is connected, called
 // in index.html when redirected from oauth.html
-app.get("/api/is_account_connected", async (req, res, next) => {
+app.get("/api/is_account_connected", async (req, res) => {
   return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
 });
 

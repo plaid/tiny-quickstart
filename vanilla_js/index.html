@@ -27,6 +27,7 @@
             });
             await getBalance();
           },
+          onLoad: () => {},
           onEvent: (eventName, metadata) => {
             console.log("Event:", eventName);
             console.log("Metadata:", metadata);
@@ -34,9 +35,11 @@
           onExit: (error, metadata) => {
             console.log(error, metadata);
           },
+          receivedRedirectUri: null,
         });
 
         // Start Link when button is clicked
+        // Change the id to linkAccount haha
         const linkAccountButton = document.getElementById("link-account");
         linkAccountButton.addEventListener("click", (event) => {
           handler.open();
@@ -45,10 +48,12 @@
 
       // Retrieves balance information
       const getBalance = async function () {
+        // api/data should be named better
         const response = await fetch("/api/data", {
           method: "GET",
         });
         const data = await response.json();
+        //const data = {'accounts': 'lol'}
 
         //Render response data
         const pre = document.getElementById("response");
