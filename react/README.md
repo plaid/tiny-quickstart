@@ -8,7 +8,7 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 #### Set up your environment
 
-This app uses Node 16 and was witten to run against v16.14.0. The app is not (yet) compatible with Node 17 or later. You can use a tool such as [nvm](https://github.com/nvm-sh/nvm) to make sure the app uses your desired version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
+This app uses Node 16 and should work with recent versions of Node. You can use a tool such as [nvm](https://github.com/nvm-sh/nvm) to make sure the app uses your desired version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
 
 #### Install dependencies
 
