@@ -170,6 +170,7 @@ const errorHandler: ErrorRequestHandler = (
     });
   }
 };
+
 app.use(errorHandler);
 
 app.listen(process.env.PORT || 8080);
