@@ -1,8 +1,8 @@
-# README: Tiny Quickstart (Vanilla JS)
+# README: Tiny Quickstart (Vanilla TypeScript)
 
 ### Overview
 
-This is a minimal app that implements Plaid using a very basic HTML/vanilla JS frontend with an Express/Node backend. After linking a sample bank account, the app retrieves balance information associated with the account and renders it on the home page.
+This is a minimal app that implements Plaid using a very basic HTML/vanilla JS frontend with an Express/Node backend running on TypeScript. After linking a sample bank account, the app retrieves balance information associated with the account and renders it on the home page.
 
 If you're looking for a more fully-featured quickstart, covering more API endpoints, available in more languages, and with explanations of the underlying flows, see the official [Plaid Quickstart](https://www.plaid.com/docs/quickstart).
 
@@ -14,7 +14,7 @@ This app uses the latest stable version of Node. At the time of writing, the lat
 
 #### Install dependencies
 
-Ensure you're in the **vanilla_js/** folder, then install the necessary dependencies:
+Ensure you're in the **vanilla_typescript/** folder, then install the necessary dependencies:
 
 ```bash
 npm install
@@ -33,10 +33,20 @@ Fill out the contents of the **.env** file with the [client ID and Sandbox secre
 #### Start the server
 
 ```bash
-npm start
+npm run dev
 ```
 
-The app will run on port 8080.
+The app will run the TypeScript version on port 8080. If you want to compile the final product to JavaScript, you can run...
+
+```bash
+npm run build
+```
+
+...followed by...
+
+```bash
+npm run start
+```
 
 ### Using the app
 
