@@ -8,9 +8,9 @@
     "express-session": "^1.17.2",
     "npm-run-all": "^4.1.5",
     "plaid": "^9.0.0-beta.11",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-plaid-link": "^3.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-plaid-link": "^3.5.1",
     "react-scripts": "^5.0.1"
   },
   "scripts": {
