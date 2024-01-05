@@ -5,7 +5,6 @@ platform :ios, '14.0'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'TinyQuickstartReactNative' do
-  pod 'Plaid', '~> 5.0.0'
   config = use_native_modules!
 
   # Flags change depending on the env values.
