@@ -78,7 +78,7 @@ PODS:
   - hermes-engine/Pre-built (0.71.14)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
-  - Plaid (5.0.1)
+  - Plaid (5.0.0)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -462,7 +462,6 @@ DEPENDENCIES:
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.1100)
-  - Plaid (~> 5.0.0)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -618,7 +617,7 @@ SPEC CHECKSUMS:
   hermes-engine: d7cc127932c89c53374452d6f93473f1970d8e88
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  Plaid: 775761d05f4b5332e46739a06129ef663905d1d8
+  Plaid: c5da02bbacd3065116e52d2e0405c2718e34917e
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: e9df143e880d0e879e7a498dc06923d728809c79
   RCTTypeSafety: c2d89c8308829c12c038ec1f431191eaa0d8c15c
@@ -655,6 +654,6 @@ SPEC CHECKSUMS:
   Yoga: e71803b4c1fff832ccf9b92541e00f9b873119b9
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: c0662155218d6ec386e9c711aeb1d4d5b8f239ac
+PODFILE CHECKSUM: 0193b0b19825d171dbeef902b7c5a24c23c2f3f8
 
 COCOAPODS: 1.14.3
