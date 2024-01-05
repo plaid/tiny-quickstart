@@ -1,5 +1,7 @@
 apply plugin: "com.android.application"
-
+apply plugin: "com.facebook.react"
+import com.android.build.OutputFile
+/**
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
 
@@ -218,6 +220,7 @@ android {
             keyPassword 'android'
         }
     }
+    namespace 'com.tinyquickstartreactnative'
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
