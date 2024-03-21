@@ -49,7 +49,7 @@ app.get("/api/create_link_token", async (req, res, next) => {
     user: { client_user_id: req.sessionID },
     client_name: "Plaid's Tiny Quickstart",
     language: "en",
-    products: ["identity"],
+    products: ["auth"],
     country_codes: ["US"],
     redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
   });
@@ -58,7 +58,6 @@ app.get("/api/create_link_token", async (req, res, next) => {
 
 // Exchanges the public token from Plaid Link for an access token
 app.post("/api/exchange_public_token", async (req, res, next) => {
-  console.log(req.body.public_token)
   const exchangeResponse = await client.itemPublicTokenExchange({
     public_token: req.body.public_token,
   });
@@ -72,48 +71,9 @@ app.post("/api/exchange_public_token", async (req, res, next) => {
 // Fetches balance data using the Node client library for Plaid
 app.get("/api/data", async (req, res, next) => {
   const access_token = req.session.access_token;
-  console.log(access_token);
-  const user = {
-    name: 'jane',
-    phone: '857-488-7937',
-    email: 'jane.doe@gmail.com',
-    address: {
-      city: 'new haven',
-      region: 'ct',
-      street: '183 bishop st',
-      country: 'us',
-      zip: '06511'
-    }
-  }
-  console.log(user);
-  const identityMatchResponse = await client.identityMatch({
-        access_token: access_token,
-        user: {
-            legal_name: user.name,
-            phone_number: user.phone,
-            email_address: user.email,
-            address: {
-                city: user.address.city,
-                region: user.address.state,
-                street: user.address.street,
-                postal_code: user.address.zip,
-                country: user.address.country
-            }
-        }
-    });
-    console.log(identityMatchResponse.data);
-    const account = identityMatchResponse.data.accounts[0];
-    const scores = {
-        'name': account.legal_name.score,
-        'phone': account.phone_number.score,
-        'email': account.email_address.score,
-        'address': account.address.score
-      };
-  console.log(scores)
-  //const balanceResponse = await client.accountsBalanceGet({ access_token });
+  const balanceResponse = await client.accountsBalanceGet({ access_token });
   res.json({
-    Balance: identityMatchResponse.data,
-    //Balance: balanceResponse.data,
+    Balance: balanceResponse.data,
   });
 });
 
