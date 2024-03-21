@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "^16.14.0"
+    "node": "^20.11.1"
   },
   "scripts": {
     "android": "react-native run-android",
@@ -22,7 +22,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
-    "plaid": "^11.0.0",
+    "plaid": "^21.0.0",
     "react": "18.2.0",
     "react-native": "0.71.14",
     "react-native-gesture-handler": "^2.7.0",
