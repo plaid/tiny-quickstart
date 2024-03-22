@@ -20,6 +20,8 @@ Ensure you're using Node 20; you can run `nvm use` to make sure you are using a 
 
 Navigate to the **ios/** folder and run `pod install` to install all necessary iOS dependencies.
 
+If `pod install` fails, you may need to first install the required version of Ruby and/or cocoapods. You can use `rbenv` to manage your Ruby version and then `rbenv install 3.3.0`. To install cocoapods, run `sudo gem install cocoapods`.
+
 #### Equip the app with API credentials
 
 Copy the contents of **.env.example** to a new file called **.env**:
