@@ -8,14 +8,14 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 #### Set up your environment
 
-This app uses Node 16 and should work with recent versions of Node. You can use a tool such as [nvm](https://github.com/nvm-sh/nvm) to make sure the app uses your desired version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
+This app uses Node 20 and should work with recent versions of Node. You can use a tool such as [nvm](https://github.com/nvm-sh/nvm) to make sure the app uses the target version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
 
 #### Install dependencies
 
 Ensure you're in the **react/** folder, then install the necessary dependencies:
 
 ```bash
-yarn install
+npm install
 ```
 
 #### Equip the app with credentials
@@ -31,7 +31,7 @@ Fill out the contents of the **.env** file with the [client ID and Sandbox secre
 #### Start the server
 
 ```bash
-yarn start
+npm start
 ```
 
 The app will run on port 3000 and will hot-reload if you make edits.
