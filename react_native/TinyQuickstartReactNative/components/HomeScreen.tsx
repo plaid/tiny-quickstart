@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }: any) => {
       <View style={styles.bottom}>
         <PlaidLink
           tokenConfig={{
-            token: linkToken,
+            token: linkToken ? linkToken : '',
             noLoadingState: false,
           }}
           onSuccess={async (success: LinkSuccess) => {
