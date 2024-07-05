@@ -67,7 +67,7 @@ To experience an OAuth flow in this app:
 PLAID_SANDBOX_REDIRECT_URI=http://localhost:3000/oauth
 ```
 
-5. Save your changes to the file and restart your local server (i.e., end the current server process and run `yarn start` again).
+5. Save your changes to the file and restart your local server (i.e., end the current server process and run `npm start` again).
 
 6. Navigate to `localhost:3000` and proceed to link an account.
 
