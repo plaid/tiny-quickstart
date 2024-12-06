@@ -7,7 +7,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "npm-run-all": "^4.1.5",
-    "plaid": "^21.0.0",
+    "plaid": "^30.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-plaid-link": "^3.5.1",
@@ -27,6 +27,14 @@
       "react-app/jest"
     ]
   },
+  "overrides": {
+    "svgo": {
+      "nth-check": ">=2.0.2"
+    },
+    "react-scripts": {
+      "postcss": ">=8.4.31"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -43,7 +51,8 @@
   "devDependencies": {
     "nodemon": "^3.1.0",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.49.9"
+    "sass": "^1.49.9",
+    "@babel/plugin-transform-private-property-in-object": "^7.23.4" 
   },
   "engines": {
     "node": ">=16.0.0"
