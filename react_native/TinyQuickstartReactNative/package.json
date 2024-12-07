@@ -20,8 +20,8 @@
     "express-session": "^1.17.3",
     "plaid": "^30.0.0",
     "react": "18.2.0",
-    "react-native": "0.74.0-rc.5",
-    "react-native-plaid-link-sdk": "11.11.0",
+    "react-native": "0.74.6",
+    "react-native-plaid-link-sdk": "11.13.3",
     "react-native-safe-area-context": "4.10.0-rc.1",
     "@react-navigation/native-stack": "6.9.26",
     "@react-navigation/native": "6.1.17",
@@ -34,10 +34,10 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@react-native/babel-preset": "0.74.76",
-    "@react-native/eslint-config": "0.74.76",
-    "@react-native/metro-config": "0.74.76",
-    "@react-native/typescript-config": "0.74.76",
+    "@react-native/babel-preset": "0.74.88",
+    "@react-native/eslint-config": "0.74.88",
+    "@react-native/metro-config": "0.74.88",
+    "@react-native/typescript-config": "0.74.88",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
@@ -62,5 +62,6 @@
   "jest": {
     "preset": "react-native"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8080",
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
