@@ -10,7 +10,7 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 #### Set up your environment
 
-This app uses the latest stable version of Node. At the time of writing, the latest stable version is v18.18.0. It's recommended you use this version of Node to run the app. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
+This project uses Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
 
 #### Install dependencies
 
