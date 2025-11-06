@@ -83,4 +83,6 @@ app.get("/api/is_account_connected", async (req, res, next) => {
   return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`the server is now running on http://localhost:${process.env.PORT || 8080}/`);
+});
