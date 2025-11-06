@@ -39,3 +39,19 @@ pnpm dev
 ```
 
 The app will run on port 3000 and will hot-reload if you make edits.
+
+### Using the app
+
+The app allows you to link a sample bank account. Use the following sample credentials:
+
+- Username: `user_good`
+- Password: `pass_good`
+
+If prompted to provide a multi-factor authentication code, use `1234`
+
+### Troubleshooting
+
+#### MISSING_FIELDS error
+
+If you encounter a **MISSING_FIELDS** error, it's possible you did not properly fill out the **.env** file. Be sure to add your client ID and Sandbox secret to the corresponding variables in the file.
+

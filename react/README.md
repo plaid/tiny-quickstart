@@ -50,7 +50,3 @@ If prompted to provide a multi-factor authentication code, use `1234`
 #### MISSING_FIELDS error
 
 If you encounter a **MISSING_FIELDS** error, it's possible you did not properly fill out the **.env** file. Be sure to add your client ID and Sandbox secret to the corresponding variables in the file.
-
-#### OAuth flow fails to start
-
-Ensure you've added the redirect URI present in the **.env** file as a [configured URI in your Plaid account](https://dashboard.plaid.com/team/api). The two values should be identical.
