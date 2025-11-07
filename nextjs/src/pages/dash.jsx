@@ -1,4 +1,4 @@
-import { withIronSessionSsr } from 'iron-session/next';
+import { getIronSession } from 'iron-session';
 import { plaidClient, sessionOptions } from '../lib/plaid';
 
 export default function Dashboard({ balance }) {
@@ -9,25 +9,23 @@ export default function Dashboard({ balance }) {
   ));
 }
 
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
-    const access_token = req.session.access_token;
+export async function getServerSideProps({ req, res }) {
+  const session = await getIronSession(req, res, sessionOptions);
+  const access_token = session.access_token;
 
-    if (!access_token) {
-      return {
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
-      };
-    }
-
-    const response = await plaidClient.accountsBalanceGet({ access_token });
+  if (!access_token) {
     return {
-      props: {
-        balance: response.data,
+      redirect: {
+        destination: '/',
+        permanent: false,
       },
     };
-  },
-  sessionOptions
-);
+  }
+
+  const response = await plaidClient.accountsBalanceGet({ access_token });
+  return {
+    props: {
+      balance: response.data,
+    },
+  };
+}

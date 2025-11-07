@@ -173,4 +173,7 @@ const errorHandler: ErrorRequestHandler = (
 
 app.use(errorHandler);
 
-app.listen(process.env.PORT || 8080);
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
