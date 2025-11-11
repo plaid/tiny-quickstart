@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
+#import <ReactAppDependencyProvider/RCTAppDependencyProvider.h>
 
 @implementation AppDelegate
 
@@ -11,6 +12,8 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
+  self.dependencyProvider = [RCTAppDependencyProvider new];
+
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
@@ -18,9 +21,8 @@
 {
   return [self bundleURL];
 }
- 
-- (NSURL *)bundleURL
 
+- (NSURL *)bundleURL
 {
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];

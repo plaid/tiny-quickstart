@@ -16,7 +16,7 @@ Follow the environment setup instructions found in the official React Native doc
 
 #### Install dependencies
 
-Ensure you're using Node 20; you can run `nvm use` to make sure you are using a compatible version of Node for this project. Next, run `npm install` in the **TinyQuickstartReactNative/** folder.
+Ensure you're using Node 18 or higher; you can run `nvm use` to make sure you are using a compatible version of Node for this project. Next, run `npm install` in the **TinyQuickstartReactNative/** folder.
 
 Navigate to the **ios/** folder and run `bundle install && pod install` to install all necessary iOS dependencies.
 
