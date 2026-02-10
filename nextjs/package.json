@@ -5,10 +5,10 @@
   },
   "dependencies": {
     "iron-session": "^8.0.4",
-    "next": "^16.0.1",
-    "plaid": "^39.1.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "next": "^16.1.6",
+    "plaid": "^41.1.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "react-plaid-link": "^4.1.1"
   },
   "scripts": {
@@ -16,7 +16,7 @@
     "build": "next build",
     "start": "next start"
   },
-  "packageManager": "pnpm@9.14.2+sha256.06e65a4965baff6d6097f9c8f75c35f6d420974dbc03d775009056a69edfd271",
+  "packageManager": "pnpm@9.15.9",
   "pnpm": {
     "overrides": {
       "postcss@<8.4.31": ">=8.4.31",
