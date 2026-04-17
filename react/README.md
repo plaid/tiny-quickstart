@@ -2,13 +2,13 @@
 
 ### Overview
 
-This is a minimal app that implements Plaid using a React frontend with an Express/Node backend. After linking a sample bank account, the app retrieves balance information associated with the account and renders it on the home page. For reference, frontend code is in **src/App.jsx**, while backend code is in **server.js**.
+This is a minimal app that implements Plaid using a React frontend with an Express/Node backend. After linking a sample bank account, the app retrieves balance information associated with the account and renders it on the home page. For reference, frontend code is in **src/App.jsx**, while backend code is in **server.cjs**.
 
 If you're looking for a more fully-featured quickstart, covering more API endpoints, available in more languages, and with explanations of the underlying flows, see the official [Plaid Quickstart](https://www.plaid.com/docs/quickstart). 
 
 #### Set up your environment
 
-This app should work with recent versions of Node. You can use a tool such as [nvm](https://github.com/nvm-sh/nvm) to make sure the app uses the target version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
+This app requires Node.js 20 or later. You can use a tool such as [nvm](https://github.com/nvm-sh/nvm) to make sure the app uses the target version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
 
 #### Install dependencies
 
