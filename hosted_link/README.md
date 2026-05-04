@@ -20,7 +20,7 @@ By default — when no webhook is configured — the server calls `/link/token/g
 
 If you'd rather receive the `public_token` server-to-server, set `PLAID_WEBHOOK_URL` in your **.env** file. The app will register that URL with the Link session, and Plaid will POST a `SESSION_FINISHED` event to it when the flow ends. The handler exchanges the token and the `access_token` becomes available to the user's session on the next request.
 
-In this mode, the `/complete` redirect is purely UX — many production apps don't render Plaid API results on it at all, since the webhook drives backend processing independently of where the user is in their browser.
+In webhook mode, `/complete` does no Plaid work — the webhook handler has already exchanged the `public_token` server-to-server. The redirect just lands the user somewhere after they finish the flow; production apps commonly show a simple "you're all set" page here instead of rendering Plaid API results.
 
 The webhook URL must be publicly reachable, so during local development, expose port 8080 via a tunnel like [ngrok](https://ngrok.com/):
 
