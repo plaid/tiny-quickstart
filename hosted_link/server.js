@@ -83,6 +83,9 @@ app.get("/complete", async (req, res, next) => {
     // Store access_token in DB instead of session storage
     req.session.access_token = exchangeResponse.data.access_token;
   }
+  // Drop the link_token so a refresh of /complete can't re-exchange
+  // the same (now-consumed) public_token.
+  delete req.session.link_token;
   res.redirect("/");
 });
 
