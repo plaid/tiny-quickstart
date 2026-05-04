@@ -19,13 +19,19 @@
         pre.style.background = "#F6F6F6";
       };
 
-      // Check whether account is connected (the server populates the session
-      // when Plaid redirects back to /complete after the Hosted Link flow).
+      // In webhook mode, the SESSION_FINISHED event that carries the
+      // public_token is delivered server-to-server, asynchronously from
+      // this page load. Retry briefly so a webhook arriving just after
+      // the redirect doesn't force the user to refresh.
       const getStatus = async function () {
-        const account = await fetch("/api/is_account_connected");
-        const connected = await account.json();
-        if (connected.status === true) {
-          getBalance();
+        for (let i = 0; i < 6; i++) {
+          const account = await fetch("/api/is_account_connected");
+          const connected = await account.json();
+          if (connected.status === true) {
+            getBalance();
+            return;
+          }
+          await new Promise((r) => setTimeout(r, 500));
         }
       };
 

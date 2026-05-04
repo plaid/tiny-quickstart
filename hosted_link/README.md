@@ -16,7 +16,11 @@ Hosted Link is the recommended Link mode when the standard embedded Plaid SDKs a
 
 ### Optional: webhook-driven completion
 
-By default, when the user is redirected back to `/complete`, the server calls `/link/token/get` to retrieve the `public_token` and exchange it. If you'd rather receive the `public_token` over a webhook, set `PLAID_WEBHOOK_URL` in your **.env** file. The app will register that URL with the Link session, and the `/webhook` handler will exchange the token when it receives the `SESSION_FINISHED` event. `/complete` then just reads the resulting `access_token` from an in-memory store.
+By default — when no webhook is configured — the server calls `/link/token/get` from the `/complete` redirect to retrieve the `public_token` and exchange it synchronously.
+
+If you'd rather receive the `public_token` server-to-server, set `PLAID_WEBHOOK_URL` in your **.env** file. The app will register that URL with the Link session, and Plaid will POST a `SESSION_FINISHED` event to it when the flow ends. The handler exchanges the token and the `access_token` becomes available to the user's session on the next request.
+
+In this mode, the `/complete` redirect is purely UX — many production apps don't render Plaid API results on it at all, since the webhook drives backend processing independently of where the user is in their browser.
 
 The webhook URL must be publicly reachable, so during local development, expose port 8080 via a tunnel like [ngrok](https://ngrok.com/):
 
