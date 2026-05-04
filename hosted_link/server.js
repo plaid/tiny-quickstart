@@ -52,6 +52,10 @@ app.get("/", async (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+app.get("/style.css", async (req, res) => {
+  res.sendFile(path.join(__dirname, "style.css"));
+});
+
 // Setting `hosted_link` on /link/token/create opts the session into the
 // Hosted Link flow; the response then includes a `hosted_link_url` that
 // the user must visit to complete linking. `completion_redirect_uri`
