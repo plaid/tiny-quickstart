@@ -2,6 +2,12 @@
 server.js – Configures the Plaid client and uses Express to define routes that drive
 a Hosted Link flow. Unlike embedded Link, the Plaid Link UI is hosted at a Plaid URL,
 so the user is redirected away to complete linking and redirected back to /complete.
+
+There are two ways to retrieve the public_token after a Hosted Link session, and this
+app demonstrates both. The choice is driven by whether PLAID_WEBHOOK_URL is set in the
+.env file: if it is, Plaid sends a SESSION_FINISHED webhook carrying the public_token
+to that URL; if it isn't, the app falls back to /link/token/get. Real apps would
+typically pick one based on whether their environment can receive webhooks.
 */
 
 require("dotenv").config();
