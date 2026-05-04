@@ -10,11 +10,11 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 Hosted Link is the recommended Link mode when the standard embedded Plaid SDKs aren't a good fit. Per the [Hosted Link docs](https://plaid.com/docs/link/hosted-link/), reach for it when:
 
-- **You don't have a frontend.** For example, an in-person retail flow where a representative sends a link to a customer.
-- **You don't control the frontend** — embedded/nested integrations like iframes or PSP integrations where rendering responsibility lives elsewhere.
 - **You're integrating from a webview-based mobile app** where the native Plaid SDKs can't be used. Hosted Link runs out-of-process (`ASWebAuthenticationSession` on iOS, Custom Tabs on Android), avoiding in-process webview restrictions.
-- **You're launching Link from outside an in-app context**, e.g. a QR code or an SMS sent by a support agent.
+- **You don't control the frontend** — embedded/nested integrations like iframes or PSP integrations where rendering responsibility lives elsewhere.
 - **You want Plaid to deliver the Link URL** to users via SMS or email (Link Delivery), so your backend doesn't have to.
+- **You don't have a frontend at all.** For example, an in-person retail flow where a representative sends a link to a customer.
+- **You're launching Link from outside an in-app context**, e.g. a QR code or an SMS sent by a support agent.
 
 The main tradeoff is reduced frontend integration work — no client SDK, no `onSuccess`/`onExit` callbacks — at the cost of a redirect-based UX rather than an in-page modal.
 
