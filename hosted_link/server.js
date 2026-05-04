@@ -2,6 +2,12 @@
 server.js – Configures the Plaid client and uses Express to define routes that drive
 a Hosted Link flow. Unlike embedded Link, the Plaid Link UI is hosted at a Plaid URL,
 so the user is redirected away to complete linking and redirected back to /complete.
+
+There are two ways to retrieve the public_token after a Hosted Link session, and this
+app demonstrates both. The choice is driven by whether PLAID_WEBHOOK_URL is set in the
+.env file: if it is, Plaid sends a SESSION_FINISHED webhook carrying the public_token
+to that URL; if it isn't, the app falls back to /link/token/get. Real apps would
+typically pick one based on whether their environment can receive webhooks.
 */
 
 require("dotenv").config();
@@ -23,6 +29,9 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 8080;
 const COMPLETION_REDIRECT_URI = `http://localhost:${PORT}/complete`;
+const WEBHOOK_URL = process.env.PLAID_WEBHOOK_URL || null;
+
+const webhookAccessTokens = new Map();
 
 // Configuration for the Plaid client
 const config = new Configuration({
@@ -43,10 +52,14 @@ app.get("/", async (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Creates a Link token configured for Hosted Link and returns the
-// Plaid-hosted URL the user should visit. The link_token is stashed
-// in the session so we can retrieve the public_token via
-// /link/token/get when the user returns from the hosted flow.
+app.get("/style.css", async (req, res) => {
+  res.sendFile(path.join(__dirname, "style.css"));
+});
+
+// Setting `hosted_link` on /link/token/create opts the session into the
+// Hosted Link flow; the response then includes a `hosted_link_url` that
+// the user must visit to complete linking. `completion_redirect_uri`
+// is where Plaid will send the user once the flow ends.
 app.get("/api/create_hosted_link", async (req, res, next) => {
   const tokenResponse = await client.linkTokenCreate({
     user: { client_user_id: req.sessionID },
@@ -54,6 +67,11 @@ app.get("/api/create_hosted_link", async (req, res, next) => {
     language: "en",
     products: ["auth"],
     country_codes: ["US"],
+    // If `webhook` is set, Plaid POSTs lifecycle events for this link
+    // session to that URL. For Hosted Link, the relevant event is
+    // SESSION_FINISHED, which carries the public_tokens for any Items
+    // the user linked.
+    ...(WEBHOOK_URL ? { webhook: WEBHOOK_URL } : {}),
     hosted_link: {
       completion_redirect_uri: COMPLETION_REDIRECT_URI,
     },
@@ -62,26 +80,53 @@ app.get("/api/create_hosted_link", async (req, res, next) => {
   res.json({ hosted_link_url: tokenResponse.data.hosted_link_url });
 });
 
-// Plaid redirects the user here after the Hosted Link flow finishes.
-// We pull the public_token off the link session, exchange it for an
-// access_token, and store it on the session.
+// Plaid POSTs all webhooks to a single URL; the body's `webhook_type` and
+// `webhook_code` identify the event. SESSION_FINISHED (under webhook_type
+// "LINK") fires when a Hosted Link session reaches a terminal state. On a
+// successful session, `public_tokens` holds one public_token per linked
+// Item — exchange them for access_tokens via /item/public_token/exchange,
+// the same way you would for embedded Link.
+app.post("/webhook", async (req, res) => {
+  const { webhook_type, webhook_code, link_token, public_tokens } =
+    req.body || {};
+  if (
+    webhook_type === "LINK" &&
+    webhook_code === "SESSION_FINISHED" &&
+    public_tokens?.length
+  ) {
+    const exchangeResponse = await client.itemPublicTokenExchange({
+      public_token: public_tokens[0],
+    });
+    webhookAccessTokens.set(link_token, exchangeResponse.data.access_token);
+  }
+  res.sendStatus(200);
+});
+
+// Plaid redirects the user here when the Hosted Link flow ends. If
+// you're using the SESSION_FINISHED webhook to get the public_token,
+// this redirect is just UX — e.g. a "thanks" page or a bounce back
+// to the app. Many production apps don't render Plaid results on
+// this page at all. Otherwise, /link/token/get is used here to
+// retrieve the public_token synchronously from the link session.
 app.get("/complete", async (req, res, next) => {
   const link_token = req.session.link_token;
   if (!link_token) {
     return res.redirect("/");
   }
 
-  const tokenGet = await client.linkTokenGet({ link_token });
-  const itemAddResult =
-    tokenGet.data.link_sessions?.[0]?.results?.item_add_results?.[0];
-
-  if (itemAddResult?.public_token) {
-    const exchangeResponse = await client.itemPublicTokenExchange({
-      public_token: itemAddResult.public_token,
-    });
-    // FOR DEMO PURPOSES ONLY
-    // Store access_token in DB instead of session storage
-    req.session.access_token = exchangeResponse.data.access_token;
+  if (!WEBHOOK_URL) {
+    const tokenGet = await client.linkTokenGet({ link_token });
+    const itemAddResult =
+      tokenGet.data.link_sessions?.[0]?.results?.item_add_results?.[0];
+    if (itemAddResult?.public_token) {
+      const exchangeResponse = await client.itemPublicTokenExchange({
+        public_token: itemAddResult.public_token,
+      });
+      // FOR DEMO PURPOSES ONLY
+      // Store access_token in DB instead of session storage
+      req.session.access_token = exchangeResponse.data.access_token;
+      req.session.access_token_source = "link_token_get";
+    }
   }
   res.redirect("/");
 });
@@ -95,11 +140,22 @@ app.get("/api/data", async (req, res, next) => {
   });
 });
 
-// Checks whether the user's account is connected, called
-// in index.html on initial page load
+// Webhooks arrive server-to-server with no inherent session context, so
+// the link_token is the correlation ID we use to associate a
+// SESSION_FINISHED event back to the browser session that initiated the
+// flow. We promote a webhook-delivered access_token into the session
+// here, lazily, the next time the browser asks about its connection.
 app.get("/api/is_account_connected", async (req, res, next) => {
+  if (!req.session.access_token && req.session.link_token) {
+    const promoted = webhookAccessTokens.get(req.session.link_token);
+    if (promoted) {
+      req.session.access_token = promoted;
+      req.session.access_token_source = "webhook";
+      webhookAccessTokens.delete(req.session.link_token);
+    }
+  }
   return req.session.access_token
-    ? res.json({ status: true })
+    ? res.json({ status: true, source: req.session.access_token_source })
     : res.json({ status: false });
 });
 

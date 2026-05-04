@@ -14,6 +14,22 @@ Hosted Link is the recommended Link mode when the standard embedded Plaid SDKs a
 - **You don't control the frontend** — embedded/nested integrations like iframes or PSP integrations where rendering responsibility lives elsewhere.
 - **You don't have a customer-facing app or website.** For example, the end user accesses Link via a QR code shown in an in-person retail checkout, or via a link sent by email or SMS.
 
+### Optional: receiving the public_token via webhook
+
+By default — when no webhook is configured — the server calls `/link/token/get` from the `/complete` redirect to retrieve the `public_token` and exchange it synchronously.
+
+If you'd rather receive the `public_token` server-to-server, set `PLAID_WEBHOOK_URL` in your **.env** file. The app will register that URL with the Link session, and Plaid will POST a `SESSION_FINISHED` event to it when the flow ends. The handler exchanges the token and the `access_token` becomes available to the user's session on the next request.
+
+In webhook mode, `/complete` does no Plaid work — the webhook handler has already exchanged the `public_token` via a webhook. The redirect just lands the user somewhere after they finish the flow; production apps commonly show a simple "you're all set" page here instead of rendering Plaid API results.
+
+The webhook URL must be publicly reachable, so during local development, expose port 8080 via a tunnel like [ngrok](https://ngrok.com/):
+
+```bash
+ngrok http 8080
+```
+
+Then set `PLAID_WEBHOOK_URL=https://<your-ngrok-subdomain>.ngrok-free.app/webhook` in **.env** and restart the server.
+
 ### Running the app
 
 #### Set up your environment
@@ -67,4 +83,4 @@ If you encounter a **MISSING_FIELDS** error, it's possible you did not properly 
 
 #### The page is blank after returning from Plaid
 
-The home page only displays balance information once `/complete` has successfully exchanged a public token. Open your server logs to confirm the exchange succeeded; common causes are an expired link token or a Sandbox session that exited without linking an account.
+The home page only displays balance information once a `public_token` has been retrieved and exchanged — in `/complete` by default, or in `/webhook` when `PLAID_WEBHOOK_URL` is set. Check the relevant server log. Common causes: an expired link token, or a Sandbox session that exited without linking an account.
