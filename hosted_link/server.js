@@ -25,9 +25,6 @@ const PORT = process.env.PORT || 8080;
 const COMPLETION_REDIRECT_URI = `http://localhost:${PORT}/complete`;
 const WEBHOOK_URL = process.env.PLAID_WEBHOOK_URL || null;
 
-// In-memory store of access tokens delivered via the SESSION_FINISHED
-// webhook, keyed by link_token. Replace with a real database in production.
-// Only used when PLAID_WEBHOOK_URL is configured.
 const webhookAccessTokens = new Map();
 
 // Configuration for the Plaid client
@@ -49,10 +46,10 @@ app.get("/", async (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Creates a Link token configured for Hosted Link and returns the
-// Plaid-hosted URL the user should visit. The link_token is stashed
-// in the session so we can retrieve the public_token via
-// /link/token/get when the user returns from the hosted flow.
+// Setting `hosted_link` on /link/token/create opts the session into the
+// Hosted Link flow; the response then includes a `hosted_link_url` that
+// the user must visit to complete linking. `completion_redirect_uri`
+// is where Plaid will send the user once the flow ends.
 app.get("/api/create_hosted_link", async (req, res, next) => {
   const tokenResponse = await client.linkTokenCreate({
     user: { client_user_id: req.sessionID },
@@ -60,10 +57,10 @@ app.get("/api/create_hosted_link", async (req, res, next) => {
     language: "en",
     products: ["auth"],
     country_codes: ["US"],
-    // When PLAID_WEBHOOK_URL is configured, Plaid will POST a
-    // SESSION_FINISHED event to it once the Hosted Link flow ends.
-    // The /webhook handler below uses that event to retrieve the
-    // public_token; otherwise /complete falls back to /link/token/get.
+    // If `webhook` is set, Plaid POSTs lifecycle events for this link
+    // session to that URL. For Hosted Link, the relevant event is
+    // SESSION_FINISHED, which carries the public_tokens for any Items
+    // the user linked.
     ...(WEBHOOK_URL ? { webhook: WEBHOOK_URL } : {}),
     hosted_link: {
       completion_redirect_uri: COMPLETION_REDIRECT_URI,
@@ -73,13 +70,12 @@ app.get("/api/create_hosted_link", async (req, res, next) => {
   res.json({ hosted_link_url: tokenResponse.data.hosted_link_url });
 });
 
-// Receives Plaid webhooks. We only care about LINK / SESSION_FINISHED for
-// this demo: when a Hosted Link session ends successfully, Plaid sends us
-// the public_tokens for any Items that were added. We exchange the first
-// one and stash the resulting access_token in webhookAccessTokens, keyed
-// by link_token, so /complete can pick it up when the user is redirected
-// back. The browser-driven /complete redirect and this server-to-server
-// webhook can arrive in either order, hence the polling in /complete.
+// Plaid POSTs all webhooks to a single URL; the body's `webhook_type` and
+// `webhook_code` identify the event. SESSION_FINISHED (under webhook_type
+// "LINK") fires when a Hosted Link session reaches a terminal state. On a
+// successful session, `public_tokens` holds one public_token per linked
+// Item — exchange them for access_tokens via /item/public_token/exchange,
+// the same way you would for embedded Link.
 app.post("/webhook", async (req, res) => {
   const { webhook_type, webhook_code, link_token, public_tokens } =
     req.body || {};
@@ -96,18 +92,12 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-// Plaid redirects the user here after the Hosted Link flow finishes.
-// There are two ways to recover the access_token at this point:
-//
-//   1. Webhook path (PLAID_WEBHOOK_URL is configured): the SESSION_FINISHED
-//      webhook handler above has already exchanged the public_token and
-//      written the access_token into webhookAccessTokens. We just read it
-//      out. The webhook can arrive slightly after this redirect, so we
-//      poll the map briefly.
-//
-//   2. linkTokenGet path (no webhook configured): we call /link/token/get
-//      to retrieve the public_token from the link session, then exchange
-//      it for an access_token here.
+// After a Hosted Link session, the public_token can be retrieved two ways:
+//   - From the SESSION_FINISHED webhook, server-to-server.
+//   - From /link/token/get, called with the original link_token.
+// Both are valid; pick based on whether your environment can receive
+// webhooks. The browser redirect and the webhook are independent and
+// can arrive in either order.
 app.get("/complete", async (req, res, next) => {
   const link_token = req.session.link_token;
   if (!link_token) {
@@ -117,7 +107,6 @@ app.get("/complete", async (req, res, next) => {
   let access_token;
 
   if (WEBHOOK_URL) {
-    // Webhook may race the redirect; poll briefly (up to ~3s).
     for (let i = 0; i < 10 && !access_token; i++) {
       access_token = webhookAccessTokens.get(link_token);
       if (!access_token) await new Promise((r) => setTimeout(r, 300));
