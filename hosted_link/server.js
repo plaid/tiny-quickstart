@@ -121,6 +121,7 @@ app.get("/complete", async (req, res, next) => {
       // FOR DEMO PURPOSES ONLY
       // Store access_token in DB instead of session storage
       req.session.access_token = exchangeResponse.data.access_token;
+      req.session.access_token_source = "link_token_get";
     }
   }
   res.redirect("/");
@@ -145,11 +146,12 @@ app.get("/api/is_account_connected", async (req, res, next) => {
     const promoted = webhookAccessTokens.get(req.session.link_token);
     if (promoted) {
       req.session.access_token = promoted;
+      req.session.access_token_source = "webhook";
       webhookAccessTokens.delete(req.session.link_token);
     }
   }
   return req.session.access_token
-    ? res.json({ status: true })
+    ? res.json({ status: true, source: req.session.access_token_source })
     : res.json({ status: false });
 });
 
