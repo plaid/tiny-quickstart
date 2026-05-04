@@ -92,14 +92,12 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-// Plaid redirects the user here when the Hosted Link flow ends. When
-// SESSION_FINISHED webhooks are configured, that event is the canonical
-// data path — this redirect is just UX (e.g. a "thanks" page or a
-// bounce back to the app). Many production apps don't render Plaid
-// results on this page at all.
-//
-// Without webhooks, /link/token/get is the synchronous fallback for
-// recovering the public_token from the link session.
+// Plaid redirects the user here when the Hosted Link flow ends. If
+// you're using the SESSION_FINISHED webhook to get the public_token,
+// this redirect is just UX — e.g. a "thanks" page or a bounce back
+// to the app. Many production apps don't render Plaid results on
+// this page at all. Otherwise, /link/token/get is used here to
+// retrieve the public_token synchronously from the link session.
 app.get("/complete", async (req, res, next) => {
   const link_token = req.session.link_token;
   if (!link_token) {
