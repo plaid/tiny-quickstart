@@ -2,7 +2,7 @@
 
 ### Overview
 
-Welcome to Plaid's Tiny Quickstart! This repo contains five folders: **vanilla_js/**, **vanilla_typescript/**, **nextjs/**, **react/**, and **react_native/**. Each folder contains a minimal full-stack app that implements support end-to-end for one Plaid product endpoint.
+Welcome to Plaid's Tiny Quickstart! This repo contains six folders: **vanilla_js/**, **vanilla_typescript/**, **nextjs/**, **react/**, **react_native/**, and **hosted_link/**. Each folder contains a minimal full-stack app that implements support end-to-end for one Plaid product endpoint. The first five demonstrate embedded Plaid Link in different frameworks; **hosted_link/** demonstrates the [Hosted Link](https://plaid.com/docs/link/hosted-link/) flow, where Plaid hosts the Link UI on a Plaid-owned URL.
 
 To get started, clone the repository, `cd` into one of the folders, and follow the instructions in the corresponding **README**. Enjoy! 
 

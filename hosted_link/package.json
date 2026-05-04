@@ -1,0 +1,19 @@
+{
+  "name": "plaid-tiny-quickstart-hosted-link",
+  "version": "1.0.0",
+  "description": "A minimal quickstart demonstrating Plaid Hosted Link and Balances",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "path": "^0.12.7",
+    "plaid": "^30.0.0"
+  }
+}

@@ -1,0 +1,73 @@
+<!-- index.html – Launches Plaid's Hosted Link flow and renders balance information after the user returns. -->
+<html>
+  <head>
+    <script>
+      // Request a Hosted Link URL from the server, then send the user there.
+      const startHostedLink = async () => {
+        const res = await fetch("/api/create_hosted_link");
+        const data = await res.json();
+        window.location.href = data.hosted_link_url;
+      };
+
+      // Retrieves balance information
+      const getBalance = async function () {
+        const response = await fetch("/api/data", { method: "GET" });
+        const data = await response.json();
+
+        const pre = document.getElementById("response");
+        pre.textContent = JSON.stringify(data, null, 2);
+        pre.style.background = "#F6F6F6";
+      };
+
+      // Check whether account is connected (the server populates the session
+      // when Plaid redirects back to /complete after the Hosted Link flow).
+      const getStatus = async function () {
+        const account = await fetch("/api/is_account_connected");
+        const connected = await account.json();
+        if (connected.status === true) {
+          getBalance();
+        }
+      };
+
+      window.addEventListener("DOMContentLoaded", () => {
+        document
+          .getElementById("link-account")
+          .addEventListener("click", startHostedLink);
+        getStatus();
+      });
+    </script>
+  </head>
+  <title>Plaid | Minimal Quickstart (Hosted Link)</title>
+  <body>
+    <button
+      type="button"
+      id="link-account"
+      class="btn btn-primary btn-dark btn-lg"
+      style="
+        border: 1px solid black;
+        border-radius: 5px;
+        background: black;
+        height: 48px;
+        width: 155px;
+        margin-top: 5;
+        margin-left: 10;
+        color: white;
+        font-size: 18px;
+      "
+    >
+      <strong>Link account</strong>
+    </button>
+    <pre
+      id="response"
+      style="
+        top: 60;
+        margin-left: 10;
+        bottom: 0;
+        position: fixed;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        font-size: 14px;
+      "
+    ></pre>
+  </body>
+</html>
