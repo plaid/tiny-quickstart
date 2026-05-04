@@ -1,22 +1,69 @@
 <!-- index.html – Launches Plaid's Hosted Link flow and renders balance information after the user returns. -->
 <html>
   <head>
+    <title>Plaid | Minimal Quickstart (Hosted Link)</title>
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        margin: 0;
+        padding: 24px;
+        color: #1a1a1a;
+      }
+      #link-account {
+        background: black;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        height: 44px;
+        padding: 0 20px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      #link-account:hover {
+        background: #222;
+      }
+      #source {
+        margin-top: 16px;
+        font-size: 13px;
+        color: #555;
+      }
+      #source code {
+        background: #eee;
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-size: 12px;
+      }
+      #response {
+        margin-top: 12px;
+        padding: 12px;
+        background: #f6f6f6;
+        border-radius: 6px;
+        font-size: 13px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      #response:empty {
+        display: none;
+      }
+    </style>
     <script>
-      // Request a Hosted Link URL from the server, then send the user there.
       const startHostedLink = async () => {
         const res = await fetch("/api/create_hosted_link");
         const data = await res.json();
         window.location.href = data.hosted_link_url;
       };
 
-      // Retrieves balance information
       const getBalance = async function () {
         const response = await fetch("/api/data", { method: "GET" });
         const data = await response.json();
-
-        const pre = document.getElementById("response");
-        pre.textContent = JSON.stringify(data, null, 2);
-        pre.style.background = "#F6F6F6";
+        document.getElementById("response").textContent = JSON.stringify(
+          data,
+          null,
+          2,
+        );
       };
 
       // In webhook mode, the SESSION_FINISHED event that carries the
@@ -38,10 +85,10 @@
 
       const renderSource = (source) => {
         const el = document.getElementById("source");
-        el.textContent =
+        el.innerHTML =
           source === "webhook"
-            ? "public_token retrieved via SESSION_FINISHED webhook"
-            : "public_token retrieved via /link/token/get";
+            ? "<code>public_token</code> retrieved via <code>SESSION_FINISHED</code> webhook"
+            : "<code>public_token</code> retrieved via <code>/link/token/get</code>";
       };
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -52,47 +99,9 @@
       });
     </script>
   </head>
-  <title>Plaid | Minimal Quickstart (Hosted Link)</title>
   <body>
-    <button
-      type="button"
-      id="link-account"
-      class="btn btn-primary btn-dark btn-lg"
-      style="
-        border: 1px solid black;
-        border-radius: 5px;
-        background: black;
-        height: 48px;
-        width: 155px;
-        margin-top: 5;
-        margin-left: 10;
-        color: white;
-        font-size: 18px;
-      "
-    >
-      <strong>Link account</strong>
-    </button>
-    <div
-      id="source"
-      style="
-        margin-top: 12px;
-        margin-left: 10px;
-        font-family: system-ui, sans-serif;
-        font-size: 13px;
-        color: #444;
-      "
-    ></div>
-    <pre
-      id="response"
-      style="
-        top: 60;
-        margin-left: 10;
-        bottom: 0;
-        position: fixed;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        font-size: 14px;
-      "
-    ></pre>
+    <button type="button" id="link-account">Link account</button>
+    <div id="source"></div>
+    <pre id="response"></pre>
   </body>
 </html>
