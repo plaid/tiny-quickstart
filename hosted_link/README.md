@@ -83,4 +83,4 @@ If you encounter a **MISSING_FIELDS** error, it's possible you did not properly 
 
 #### The page is blank after returning from Plaid
 
-The home page only displays balance information once `/complete` has successfully exchanged a public token. Open your server logs to confirm the exchange succeeded; common causes are an expired link token or a Sandbox session that exited without linking an account.
+The home page only displays balance information once a `public_token` has been retrieved and exchanged — in `/complete` by default, or in `/webhook` when `PLAID_WEBHOOK_URL` is set. Check the relevant server log. Common causes: an expired link token, or a Sandbox session that exited without linking an account.
