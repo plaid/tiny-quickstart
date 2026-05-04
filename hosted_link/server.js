@@ -94,8 +94,6 @@ app.post("/webhook", async (req, res) => {
     webhook_code === "SESSION_FINISHED" &&
     public_tokens?.length
   ) {
-    // A Hosted Link session can include multiple linked Items;
-    // for simplicity this demo handles only the first one.
     const exchangeResponse = await client.itemPublicTokenExchange({
       public_token: public_tokens[0],
     });
@@ -117,8 +115,6 @@ app.get("/complete", async (req, res, next) => {
   }
 
   if (!WEBHOOK_URL) {
-    // A Hosted Link session can include multiple linked Items;
-    // for simplicity this demo handles only the first one.
     const tokenGet = await client.linkTokenGet({ link_token });
     const itemAddResult =
       tokenGet.data.link_sessions?.[0]?.results?.item_add_results?.[0];
