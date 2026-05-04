@@ -14,6 +14,18 @@ Hosted Link is the recommended Link mode when the standard embedded Plaid SDKs a
 - **You don't control the frontend** — embedded/nested integrations like iframes or PSP integrations where rendering responsibility lives elsewhere.
 - **You don't have a customer-facing app or website.** For example, the end user accesses Link via a QR code shown in an in-person retail checkout, or via a link sent by email or SMS.
 
+### Optional: webhook-driven completion
+
+By default, when the user is redirected back to `/complete`, the server calls `/link/token/get` to retrieve the `public_token` and exchange it. If you'd rather receive the `public_token` over a webhook, set `PLAID_WEBHOOK_URL` in your **.env** file. The app will register that URL with the Link session, and the `/webhook` handler will exchange the token when it receives the `SESSION_FINISHED` event. `/complete` then just reads the resulting `access_token` from an in-memory store.
+
+The webhook URL must be publicly reachable, so during local development, expose port 8080 via a tunnel like [ngrok](https://ngrok.com/):
+
+```bash
+ngrok http 8080
+```
+
+Then set `PLAID_WEBHOOK_URL=https://<your-ngrok-subdomain>.ngrok-free.app/webhook` in **.env** and restart the server.
+
 ### Running the app
 
 #### Set up your environment

@@ -23,6 +23,12 @@ app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 8080;
 const COMPLETION_REDIRECT_URI = `http://localhost:${PORT}/complete`;
+const WEBHOOK_URL = process.env.PLAID_WEBHOOK_URL || null;
+
+// In-memory store of access tokens delivered via the SESSION_FINISHED
+// webhook, keyed by link_token. Replace with a real database in production.
+// Only used when PLAID_WEBHOOK_URL is configured.
+const webhookAccessTokens = new Map();
 
 // Configuration for the Plaid client
 const config = new Configuration({
@@ -54,6 +60,11 @@ app.get("/api/create_hosted_link", async (req, res, next) => {
     language: "en",
     products: ["auth"],
     country_codes: ["US"],
+    // When PLAID_WEBHOOK_URL is configured, Plaid will POST a
+    // SESSION_FINISHED event to it once the Hosted Link flow ends.
+    // The /webhook handler below uses that event to retrieve the
+    // public_token; otherwise /complete falls back to /link/token/get.
+    ...(WEBHOOK_URL ? { webhook: WEBHOOK_URL } : {}),
     hosted_link: {
       completion_redirect_uri: COMPLETION_REDIRECT_URI,
     },
@@ -62,26 +73,72 @@ app.get("/api/create_hosted_link", async (req, res, next) => {
   res.json({ hosted_link_url: tokenResponse.data.hosted_link_url });
 });
 
+// Receives Plaid webhooks. We only care about LINK / SESSION_FINISHED for
+// this demo: when a Hosted Link session ends successfully, Plaid sends us
+// the public_tokens for any Items that were added. We exchange the first
+// one and stash the resulting access_token in webhookAccessTokens, keyed
+// by link_token, so /complete can pick it up when the user is redirected
+// back. The browser-driven /complete redirect and this server-to-server
+// webhook can arrive in either order, hence the polling in /complete.
+app.post("/webhook", async (req, res) => {
+  const { webhook_type, webhook_code, link_token, public_tokens } =
+    req.body || {};
+  if (
+    webhook_type === "LINK" &&
+    webhook_code === "SESSION_FINISHED" &&
+    public_tokens?.length
+  ) {
+    const exchangeResponse = await client.itemPublicTokenExchange({
+      public_token: public_tokens[0],
+    });
+    webhookAccessTokens.set(link_token, exchangeResponse.data.access_token);
+  }
+  res.sendStatus(200);
+});
+
 // Plaid redirects the user here after the Hosted Link flow finishes.
-// We pull the public_token off the link session, exchange it for an
-// access_token, and store it on the session.
+// There are two ways to recover the access_token at this point:
+//
+//   1. Webhook path (PLAID_WEBHOOK_URL is configured): the SESSION_FINISHED
+//      webhook handler above has already exchanged the public_token and
+//      written the access_token into webhookAccessTokens. We just read it
+//      out. The webhook can arrive slightly after this redirect, so we
+//      poll the map briefly.
+//
+//   2. linkTokenGet path (no webhook configured): we call /link/token/get
+//      to retrieve the public_token from the link session, then exchange
+//      it for an access_token here.
 app.get("/complete", async (req, res, next) => {
   const link_token = req.session.link_token;
   if (!link_token) {
     return res.redirect("/");
   }
 
-  const tokenGet = await client.linkTokenGet({ link_token });
-  const itemAddResult =
-    tokenGet.data.link_sessions?.[0]?.results?.item_add_results?.[0];
+  let access_token;
 
-  if (itemAddResult?.public_token) {
-    const exchangeResponse = await client.itemPublicTokenExchange({
-      public_token: itemAddResult.public_token,
-    });
+  if (WEBHOOK_URL) {
+    // Webhook may race the redirect; poll briefly (up to ~3s).
+    for (let i = 0; i < 10 && !access_token; i++) {
+      access_token = webhookAccessTokens.get(link_token);
+      if (!access_token) await new Promise((r) => setTimeout(r, 300));
+    }
+    webhookAccessTokens.delete(link_token);
+  } else {
+    const tokenGet = await client.linkTokenGet({ link_token });
+    const itemAddResult =
+      tokenGet.data.link_sessions?.[0]?.results?.item_add_results?.[0];
+    if (itemAddResult?.public_token) {
+      const exchangeResponse = await client.itemPublicTokenExchange({
+        public_token: itemAddResult.public_token,
+      });
+      access_token = exchangeResponse.data.access_token;
+    }
+  }
+
+  if (access_token) {
     // FOR DEMO PURPOSES ONLY
     // Store access_token in DB instead of session storage
-    req.session.access_token = exchangeResponse.data.access_token;
+    req.session.access_token = access_token;
   }
   res.redirect("/");
 });
