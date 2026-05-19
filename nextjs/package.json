@@ -5,10 +5,10 @@
   },
   "dependencies": {
     "iron-session": "^8.0.4",
-    "next": "^16.1.6",
-    "plaid": "^41.1.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "next": "^16.2.6",
+    "plaid": "^41.4.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "react-plaid-link": "^4.1.1"
   },
   "scripts": {
