@@ -1,6 +1,7 @@
 node_modules
 .env
 yarn.lock
+.idea
 
 react/dist
 vanilla_typescript/dist/*
