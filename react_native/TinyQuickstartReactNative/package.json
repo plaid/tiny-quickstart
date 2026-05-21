@@ -56,7 +56,8 @@
     "svgo": {
       "nth-check": ">=2.0.2"
     },
-    "@react-native-community/cli-server-api": "15.0.0"
+    "@react-native-community/cli-server-api": "15.0.0",
+    "fast-xml-parser": "^5.7.0"
   },
   "jest": {
     "preset": "react-native"
