@@ -34,7 +34,7 @@ Then set `PLAID_WEBHOOK_URL=https://<your-ngrok-subdomain>.ngrok-free.app/webhoo
 
 #### Set up your environment
 
-This app uses the latest stable version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
+This app uses the latest stable version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.org/en/download).
 
 #### Install dependencies
 
