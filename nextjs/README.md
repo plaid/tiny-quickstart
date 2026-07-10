@@ -10,7 +10,7 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 #### Set up your environment
 
-Install [Node.js v16+](https://nodejs.dev/learn/how-to-install-nodejs).
+Install [Node.js v16+](https://nodejs.org/en/download).
 
 [Install `pnpm`](https://pnpm.io/installation) to follow along with these instructions as written.
 

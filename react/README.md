@@ -8,7 +8,7 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 #### Set up your environment
 
-This app requires Node.js 20 or later. You can use a tool such as [nvm](https://github.com/nvm-sh/nvm) to make sure the app uses the target version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.dev/learn/how-to-install-nodejs).
+This app requires Node.js 20 or later. You can use a tool such as [nvm](https://github.com/nvm-sh/nvm) to make sure the app uses the target version of Node. For information on installing Node, see [How to install Node.js](https://nodejs.org/en/download).
 
 #### Install dependencies
 
