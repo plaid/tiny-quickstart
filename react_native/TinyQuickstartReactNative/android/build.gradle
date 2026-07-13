@@ -3,7 +3,7 @@
 buildscript {
     ext {
         buildToolsVersion = "36.0.0"
-        minSdkVersion = 24
+        minSdkVersion = 26
         compileSdkVersion = 36
         targetSdkVersion = 36
         ndkVersion = "30.0.14904198"
@@ -48,3 +48,4 @@ allprojects {
         maven { url 'https://www.jitpack.io' }
     }
 }
+apply plugin: "expo-root-project"
