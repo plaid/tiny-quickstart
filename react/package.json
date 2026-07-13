@@ -8,8 +8,8 @@
     "express": "^4.22.1",
     "express-session": "^1.19.0",
     "plaid": "^41.1.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "react-plaid-link": "^4.1.1"
   },
   "scripts": {
