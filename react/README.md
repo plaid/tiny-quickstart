@@ -28,6 +28,10 @@ cp .env.example .env
 
 Fill out the contents of the **.env** file with the [client ID and Sandbox secret in your Plaid dashboard](https://dashboard.plaid.com/team/keys). Don't place quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
 
+#### Configure OAuth (optional)
+
+Many major US banks connect only via OAuth, which this sample already supports via a pop-up (no setup needed). Setting a redirect URI switches to the OAuth redirect flow instead — more robust, because pop-ups fail in in-app browsers (links opened from Mail, Facebook, etc.), which you can't predict, and aren't available when Link's web SDK runs inside a mobile app. To use it, allowlist a redirect URI in the [Plaid Dashboard](https://dashboard.plaid.com/team/api) and set `PLAID_SANDBOX_REDIRECT_URI` in **.env** (use `http://localhost:3000/`). See the [OAuth guide](https://plaid.com/docs/link/oauth/).
+
 #### Start the server
 
 ```bash
