@@ -10,7 +10,7 @@
     "plaid": "^41.1.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-plaid-link": "^4.1.1"
+    "react-plaid-link": "^5.0.0"
   },
   "scripts": {
     "start": "run-p start-client start-server",
