@@ -26,10 +26,6 @@ export default function PlaidLink() {
   }, []);
 
   const onSuccess = useCallback(async (publicToken) => {
-    // Link flows that don't create an Item return a null public_token.
-    if (publicToken == null) {
-      return;
-    }
     await fetch('/api/exchange-public-token', {
       method: 'POST',
       headers: {

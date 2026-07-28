@@ -8,10 +8,6 @@ function App(props) {
   const [loading, setLoading] = useState(true);
 
   const onSuccess = useCallback(async (publicToken) => {
-    // Link flows that don't create an Item return a null public_token.
-    if (publicToken == null) {
-      return;
-    }
     setLoading(true);
     await fetch("/api/exchange_public_token", {
       method: "POST",
