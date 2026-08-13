@@ -21,10 +21,10 @@
     "expo": "~56.0.0",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
-    "plaid": "^43.0.0",
+    "plaid": "^45.0.0",
     "react": "19.2.3",
     "react-native": "0.85.3",
-    "react-native-plaid-link-sdk": "13.0.2",
+    "react-native-plaid-link-sdk": "13.0.4",
     "react-native-safe-area-context": "5.6.2",
     "react-native-screens": "4.18.0",
     "typescript": "^5.8.3"

@@ -7,7 +7,7 @@
     "dotenv": "^16.6.1",
     "express": "^4.22.1",
     "express-session": "^1.19.0",
-    "plaid": "^41.1.0",
+    "plaid": "^45.0.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-plaid-link": "^5.0.0"
