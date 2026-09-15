@@ -65,8 +65,7 @@
     "uuid": ">=11.1.1",
     "metro": "^0.84.5",
     "metro-config": "^0.84.5",
-    "metro-transform-worker": "^0.84.5",
-    "image-size": ">=1.2.1"
+    "metro-transform-worker": "^0.84.5"
   },
   "jest": {
     "preset": "jest-expo"
