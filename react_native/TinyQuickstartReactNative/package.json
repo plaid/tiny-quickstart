@@ -21,7 +21,7 @@
     "expo": "~56.0.0",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
-    "plaid": "^45.0.0",
+    "plaid": "^47.0.0",
     "react": "19.2.3",
     "react-native": "0.85.3",
     "react-native-plaid-link-sdk": "13.0.4",
@@ -62,7 +62,10 @@
     },
     "@react-native-community/cli-server-api": "15.0.0",
     "fast-xml-parser": "^5.7.0",
-    "uuid": ">=11.1.1"
+    "uuid": ">=11.1.1",
+    "metro": "^0.84.5",
+    "metro-config": "^0.84.5",
+    "metro-transform-worker": "^0.84.5"
   },
   "jest": {
     "preset": "jest-expo"
