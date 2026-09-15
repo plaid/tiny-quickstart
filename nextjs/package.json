@@ -5,8 +5,8 @@
   },
   "dependencies": {
     "iron-session": "^8.0.4",
-    "next": "^16.2.11",
-    "plaid": "^45.0.0",
+    "next": "^16.3.5",
+    "plaid": "^47.0.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-plaid-link": "^5.0.0"
