@@ -4,7 +4,6 @@ server.cjs – Configures the Plaid client and uses Express to defines routes th
 
 require("dotenv").config();
 const express = require("express");
-const bodyParser = require("body-parser");
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const app = express();
@@ -15,8 +14,8 @@ app.use(
   session({ secret: "bosco", saveUninitialized: true, resave: true })
 );
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // Configuration for the Plaid client
 const config = new Configuration({

@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "dotenv": "^16.6.1",
-    "express": "^4.22.1",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
     "express-session": "^1.19.0",
     "plaid": "^47.0.0",
     "react": "^19.2.6",

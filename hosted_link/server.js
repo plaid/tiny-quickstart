@@ -12,7 +12,6 @@ typically pick one based on whether their environment can receive webhooks.
 
 require("dotenv").config();
 const express = require("express");
-const bodyParser = require("body-parser");
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const path = require("path");
@@ -24,8 +23,8 @@ app.use(
   session({ secret: "bosco", saveUninitialized: true, resave: true })
 );
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 const COMPLETION_REDIRECT_URI = `http://localhost:${PORT}/complete`;
