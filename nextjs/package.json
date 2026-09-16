@@ -1,10 +1,10 @@
 {
   "private": true,
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22.13.0"
   },
   "dependencies": {
-    "iron-session": "^8.0.4",
+    "iron-session": "^9.0.1",
     "next": "^16.3.5",
     "plaid": "^47.0.0",
     "react": "^19.2.6",
