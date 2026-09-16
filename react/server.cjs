@@ -66,6 +66,22 @@ app.get("/api/balance", async (req, res, next) => {
   });
 });
 
+function errorHandler(err, req, res, next) {
+  console.error(`Received an error for ${req.method} ${req.path}`);
+  if (err.response) {
+    console.error(err.response.data);
+    res.status(500).send(err.response.data);
+  } else {
+    console.error(err);
+    res.status(500).send({
+      error_code: "OTHER_ERROR",
+      error_message: "I got some other message on the server.",
+    });
+  }
+}
+
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

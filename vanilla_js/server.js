@@ -82,6 +82,22 @@ app.get("/api/is_account_connected", async (req, res, next) => {
   return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
 });
 
+function errorHandler(err, req, res, next) {
+  console.error(`Received an error for ${req.method} ${req.path}`);
+  if (err.response) {
+    console.error(err.response.data);
+    res.status(500).send(err.response.data);
+  } else {
+    console.error(err);
+    res.status(500).send({
+      error_code: "OTHER_ERROR",
+      error_message: "I got some other message on the server.",
+    });
+  }
+}
+
+app.use(errorHandler);
+
 app.listen(process.env.PORT || 8080, () => {
   console.log(`the server is now running on http://localhost:${process.env.PORT || 8080}/`);
 });
