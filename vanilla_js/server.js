@@ -5,7 +5,6 @@ Utilizes the official Plaid node.js client library to make calls to the Plaid AP
 
 require("dotenv").config();
 const express = require("express");
-const bodyParser = require("body-parser");
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const path = require("path");
@@ -17,8 +16,8 @@ app.use(
   session({ secret: "bosco", saveUninitialized: true, resave: true })
 );
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get("/", async (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));

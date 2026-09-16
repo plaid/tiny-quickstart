@@ -10,7 +10,6 @@ import express, {
   Application,
   NextFunction,
 } from "express";
-import bodyParser from "body-parser";
 import session from "express-session";
 import {
   Configuration,
@@ -44,8 +43,8 @@ app.use(
   })
 );
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get("/", async (_: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "index.html"));
