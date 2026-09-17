@@ -64,7 +64,8 @@
     "uuid": ">=11.1.1",
     "metro": "^0.84.5",
     "metro-config": "^0.84.5",
-    "metro-transform-worker": "^0.84.5"
+    "metro-transform-worker": "^0.84.5",
+    "decode-uri-component": "^0.5.0"
   },
   "jest": {
     "preset": "jest-expo"
