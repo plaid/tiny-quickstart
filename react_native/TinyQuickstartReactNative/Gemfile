@@ -5,6 +5,7 @@ ruby ">= 2.7.0"
  
 gem 'cocoapods', '>= 1.13'
 gem 'activesupport', '>= 7.2.3.1', '< 8.0'
+gem 'json', '~> 2.21', '>= 2.21.2'
 
 # Ruby 3.4.0 has removed some libraries from the standard library.
 gem 'bigdecimal'
