@@ -70,6 +70,7 @@ const config = new Configuration({
 
 //Instantiate the Plaid client with the configuration
 const client: PlaidApi = new PlaidApi(config);
+const redirectUri = process.env.PLAID_SANDBOX_REDIRECT_URI?.trim();
 
 //Creates a Link token and return it
 app.get(
@@ -82,7 +83,7 @@ app.get(
         language: "en",
         products: [Products.Auth],
         country_codes: [CountryCode.Us],
-        redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
+        ...(redirectUri ? { redirect_uri: redirectUri } : {}),
       };
       const tokenResponse = await client.linkTokenCreate(linkConfigObject);
       res.json(tokenResponse.data);
