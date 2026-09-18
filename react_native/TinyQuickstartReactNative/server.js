@@ -37,6 +37,7 @@ const client = new PlaidApi(config);
 //Creates a Link token and return it
 app.post('/api/create_link_token', async (req, res, next) => {
   let payload = {};
+  const redirectUri = process.env.PLAID_SANDBOX_REDIRECT_URI?.trim();
   //Payload if running iOS
   if (req.body.address === 'localhost') {
     payload = {
@@ -45,7 +46,7 @@ app.post('/api/create_link_token', async (req, res, next) => {
       language: 'en',
       products: ['auth'],
       country_codes: ['US'],
-      redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
+      ...(redirectUri ? {redirect_uri: redirectUri} : {}),
     };
   } else {
     //Payload if running Android
