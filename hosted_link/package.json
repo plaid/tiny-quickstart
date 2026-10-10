@@ -9,9 +9,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
     "express-session": "^1.19.0",
-    "plaid": "^47.0.0"
+    "plaid": "^48.0.0"
   }
 }

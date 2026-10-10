@@ -4,26 +4,25 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
     "express-session": "^1.19.0",
-    "plaid": "^47.0.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "plaid": "^48.0.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "react-plaid-link": "^5.0.0"
   },
   "scripts": {
     "start": "run-p start-client start-server",
     "start-client": "vite",
-    "start-server": "nodemon server.cjs",
+    "start-server": "node --watch server.cjs",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.97.3",
-    "vite": "^8.0.8"
+    "sass": "^1.105.1",
+    "vite": "^8.3.4"
   },
   "engines": {
     "node": ">=20.19.0"
