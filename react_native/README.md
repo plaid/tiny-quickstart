@@ -12,11 +12,11 @@ If you're looking for a more fully-featured quickstart, covering more API endpoi
 
 You'll need to set up a mobile development environment to run the app on iOS or Android. 
 
-Follow the environment setup instructions found in the official React Native docs: https://reactnative.dev/docs/environment-setup. You'll specifically need to follow the instructions under "React Native CLI Quickstart". Select your "Development OS" and follow the installation instructions for **both** iOS and Android (under "Target OS").
+Follow the environment setup instructions found in the official React Native docs: https://reactnative.dev/docs/set-up-your-environment. Select your "Development OS" and follow the installation instructions for **both** iOS and Android (under "Target OS").
 
 #### Install dependencies
 
-Ensure you're using Node 20.19.4 or higher; you can run `nvm use` to make sure you are using a compatible version of Node for this project. Next, run `npm install` in the **TinyQuickstartReactNative/** folder.
+Ensure you're using Node 22.13 or higher; you can run `nvm use` to make sure you are using a compatible version of Node for this project. Next, run `npm install` in the **TinyQuickstartReactNative/** folder.
 
 Navigate to the **ios/** folder and run `bundle install && pod install` to install all necessary iOS dependencies.
 
