@@ -28,32 +28,31 @@ Copy the contents of **.env.example** to a new file called **.env**:
 cp .env.example .env
 ```
 
-Fill out **.env** with the [client ID and Sandbox secrets found in your Plaid dashboard](https://dashboard.plaid.com/team/keys). Do not use quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`, not `PLAID_CLIENT_ID="adn08a280hqdaj0ad"`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
+Fill out **.env** with the [client ID and Sandbox secrets found in your Plaid dashboard](https://dashboard.plaid.com/developers/keys). Do not use quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`, not `PLAID_CLIENT_ID="adn08a280hqdaj0ad"`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
 
 #### Configure OAuth
 
 **iOS**
 
-Ensure the project has the following configurations set in Xcode:
+OAuth on iOS requires a redirect URI that is a Universal Link for your app, on a domain you control. Configure the project in Xcode:
 
-1. Open **TinyQuickstartReactNative** in Xcode. 
+1. Open **TinyQuickstartReactNative** in Xcode.
 2. In the navigator on the left, click on "TinyQuickstartReactNative".
 3. Click "TinyQuickstartReactNative" under "Targets".
 4. Click "Signing & Capabilities".
-5. Under "Signing", set "Team" to "None", and set "Bundle Identifier" to `com.plaid.linkauth.ios.reactnative`.
-6. Under "Associated Domains", add `applinks:cdn-testing.plaid.com` as an entry. If "Associated Domains" isn't present, you'll need to add it as a capability by clicking "+ Capability" (located near the "Signing & Capabilities" tab).
-
-![Xcode configuration](./xcode-config.png)
+5. Under "Signing", select your development team, and set "Bundle Identifier" to an identifier registered to that team.
+6. Under "Associated Domains", replace `applinks:cdn-testing.plaid.com` with `applinks:` followed by your domain, and host an `apple-app-site-association` file on that domain that lists your app. See [Set up Universal Links](https://plaid.com/docs/link/ios/#set-up-universal-links). For examples, see Plaid's [Sandbox redirect page](https://cdn-testing.plaid.com/link/v2/stable/sandbox-oauth-a2a-react-native-redirect.html) and its [`apple-app-site-association` file](https://cdn-testing.plaid.com/.well-known/apple-app-site-association).
 
 Configure your redirect URI in the Plaid Dashboard.
 
-1. In the ["API" section of the Plaid Dashboard](https://dashboard.plaid.com/team/api), add the following as a redirect URI: `https://cdn-testing.plaid.com/link/v2/stable/sandbox-oauth-a2a-react-native-redirect.html`.
+1. In the ["API" section of the Plaid Dashboard](https://dashboard.plaid.com/developers/api), add a redirect URI on your domain, for example `https://app.example.com/plaid/`.
+2. Set `PLAID_SANDBOX_REDIRECT_URI` in **.env** to the same URI.
 
 **Android**
 
 Configure your Android package name in the Plaid Dashboard.
 
-1. In the ["API" section of the Plaid Dashboard](https://dashboard.plaid.com/team/api), add the following as an allowed Android package name: `com.tinyquickstartreactnative`.
+1. In the ["API" section of the Plaid Dashboard](https://dashboard.plaid.com/developers/api), add the following as an allowed Android package name: `com.tinyquickstartreactnative`.
 
 For more information on OAuth with Plaid, see the [OAuth Guide](https://plaid.com/docs/link/oauth/) in Plaid's documentation.
 

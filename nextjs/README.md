@@ -2,7 +2,7 @@
 
 ### Overview
 
-This is a minimial application that uses [Next.js](https://nextjs.org/) for a React frontend and a Node.js backend.
+This is a minimal application that uses [Next.js](https://nextjs.org/) for a React frontend and a Node.js backend.
 
 After linking a sample bank account, the app retrieves balance information associated with the account and renders it on the `/dash` page.
 
@@ -30,11 +30,11 @@ Copy the included **.env.example** to a file called **.env**.
 cp .env.example .env
 ```
 
-Fill out the contents of the **.env** file with the [client ID and Sandbox secret in your Plaid dashboard](https://dashboard.plaid.com/team/keys). Don't place quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
+Fill out the contents of the **.env** file with the [client ID and Sandbox secret in your Plaid dashboard](https://dashboard.plaid.com/developers/keys). Don't place quotes (`"`) around the credentials (i.e., `PLAID_CLIENT_ID=adn08a280hqdaj0ad`). Use the "Sandbox" secret when setting the `PLAID_SECRET` variable.
 
 #### Configure OAuth (optional)
 
-Many major US banks connect only via OAuth, which this sample already supports via a pop-up (no setup needed). Setting a redirect URI switches to the OAuth redirect flow instead — more robust, because pop-ups fail in in-app browsers (links opened from Mail, Facebook, etc.), which you can't predict, and aren't available when Link's web SDK runs inside a mobile app. To use it, allowlist a redirect URI in the [Plaid Dashboard](https://dashboard.plaid.com/team/api) and set `PLAID_SANDBOX_REDIRECT_URI` in **.env** (use `http://localhost:3000/`). See the [OAuth guide](https://plaid.com/docs/link/oauth/).
+Many major US banks connect only via OAuth, which this sample already supports via a pop-up (no setup needed). Setting a redirect URI switches to the OAuth redirect flow instead — more robust, because pop-ups fail in in-app browsers (links opened from Mail, Facebook, etc.), which you can't predict, and aren't available when Link's web SDK runs inside a mobile app. To use it, allowlist a redirect URI in the [Plaid Dashboard](https://dashboard.plaid.com/developers/api) and set `PLAID_SANDBOX_REDIRECT_URI` in **.env** (use `http://localhost:3000/`). See the [OAuth guide](https://plaid.com/docs/link/oauth/).
 
 #### Start the server
 
