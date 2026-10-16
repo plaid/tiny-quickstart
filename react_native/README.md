@@ -41,7 +41,7 @@ OAuth on iOS requires a redirect URI that is a Universal Link for your app, on a
 3. Click "TinyQuickstartReactNative" under "Targets".
 4. Click "Signing & Capabilities".
 5. Under "Signing", select your development team, and set "Bundle Identifier" to an identifier registered to that team.
-6. Under "Associated Domains", replace `applinks:cdn-testing.plaid.com` with `applinks:` followed by your domain, and host an `apple-app-site-association` file on that domain that lists your app. See [Set up Universal Links](https://plaid.com/docs/link/ios/#set-up-universal-links).
+6. Under "Associated Domains", replace `applinks:cdn-testing.plaid.com` with `applinks:` followed by your domain, and host an `apple-app-site-association` file on that domain that lists your app. See [Set up Universal Links](https://plaid.com/docs/link/ios/#set-up-universal-links). For examples, see Plaid's [Sandbox redirect page](https://cdn-testing.plaid.com/link/v2/stable/sandbox-oauth-a2a-react-native-redirect.html) and its [`apple-app-site-association` file](https://cdn-testing.plaid.com/.well-known/apple-app-site-association).
 
 Configure your redirect URI in the Plaid Dashboard.
 
